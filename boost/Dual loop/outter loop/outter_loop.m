@@ -151,6 +151,14 @@ T_closed_v = feedback(Gpi_v * Gv_plant, Hv);
 figure('Name', 'Full System Output Voltage Step Response', 'NumberTitle', 'off', 'Color', 'w');
 step(T_closed_v);
 grid on;
-title('Output Voltage Step Response (Reference Change)');
+title(sprintf('Output Voltage Step Response (fc = %.0f Hz, PM = %.0f deg)', fcv, phi_mv));
 xlabel('Time (s)');
 ylabel('Output Voltage (V)');
+
+% Extract step response characteristics
+info_v = stepinfo(T_closed_v);
+fprintf('\n============ Closed-Loop Step Response ============\n');
+fprintf('Settling time (2%%)          ts        = %.2e s\n', info_v.SettlingTime);
+fprintf('Rise time                   tr        = %.2e s\n', info_v.RiseTime);
+fprintf('Overshoot                   OS        = %.2f %%\n', info_v.Overshoot);
+fprintf('Peak value                  peak      = %.4f V\n', info_v.Peak);
